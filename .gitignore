@@ -1,0 +1,5 @@
+.pytest_cache
+.venv
+.vscode
+*.numbers
+__pycache__

@@ -1,0 +1,1 @@
+Goal of this project is to create a sports headline generator that will look up sports results for a specific team on this day in history, choose one at random and tweet it.
