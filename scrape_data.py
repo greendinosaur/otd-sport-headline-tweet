@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import match
 from datetime import date
 from datetime import datetime
+import time
 
 def parse_score(score):
     # 2:1 (0:1, 1:1) aet
@@ -40,7 +41,6 @@ def scrape_worldfootball(team, year):
                                 print(row.find("td").find("a").find("b").contents[0].strip())
                             else:
                                 if row.find("td"):
-                                    #print(row)
                                     cols = row.find_all("td")
                                     print(competition)
                                     competition_round = cols[0].find("a").contents[0].strip()
@@ -73,5 +73,11 @@ def scrape_worldfootball(team, year):
     return matches
 
 # get the data and save to file
-matches = scrape_worldfootball("everton-fc","1997")
-match.save_matches_to_file("data/wof.csv", matches)
+def get_and_saveworldfootball(club, start_year, end_year):
+    for i in range(start_year,end_year+1):
+        print("getting data for year", i)
+        matches = scrape_worldfootball(club,str(i))
+        match.save_matches_to_file("data/everton_wof.csv", matches)
+        time.sleep(3)
+
+get_and_saveworldfootball("everton-fc", 2019,2020)

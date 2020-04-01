@@ -2,6 +2,7 @@ from datetime import date
 from datetime import datetime
 import match
 import csv
+import config
 
 # helper functions to parse and normalise a dataset prior to saving it out
 def parse_and_save_dataset(fname_in, fname_out):
@@ -16,24 +17,24 @@ def parse_and_save_dataset(fname_in, fname_out):
         found_myteam = False
         opponent = ""
         place = 'N'
-        everton_score = -1
+        my_team_score = -1
         opponent_score = -1
         result = ''
-        if match_details[5] == "Everton": # everton is the home team
+        if match_details[5] == config.my_team: # my_team is the home team
             found_myteam = True   
             opponent = match_details[6]
-            everton_score = int(match_details[7])
+            my_team_score = int(match_details[7])
             opponent_score = int(match_details[8])
             place = ('H' if match_details[4] == "TRUE" else 'N')    
-        elif match_details[6] == "Everton": # everton is the away team
+        elif match_details[6] == config.my_team: # my_team is the away team
             found_myteam = True
             opponent = match_details[5]
-            everton_score = int(match_details[8])
+            my_team_score = int(match_details[8])
             opponent_score = int(match_details[7])
             place = ('A' if match_details[4] == "TRUE" else 'N')
                 
         if found_myteam:
-            result = ('W' if everton_score > opponent_score else ('L' if everton_score < opponent_score else 'D'))
+            result = ('W' if my_team_score > opponent_score else ('L' if my_team_score < opponent_score else 'D'))
             loaded_match = match.Match(match_date,match_details[2],'',opponent,place)
             loaded_match.set_result_data(result,tuple(match_details[7],match_details[8]),"","")
             matches.append(loaded_match)

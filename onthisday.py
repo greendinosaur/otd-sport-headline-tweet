@@ -22,7 +22,7 @@ def load_matches_data(date_of_interest, fname):
             matches.append(loaded_match)
 
     file_in.close()
-    print(matches)
+    print("found matches:",len(matches))
     return matches
   
 # given a list of matches, choose one at random
@@ -36,7 +36,8 @@ def choose_random_match(matches):
 # generate the headline with details of the round and competition
 def format_competition_round_headline(match):
     if len(match.competition_round) > 0:
-        return match.competition_round + " round, " + match.competition_round
+        round_prefix = (" " if match.competition_round.upper().find("ROUND") != -1 else " round ")
+        return match.competition + round_prefix + match.competition_round
     else:
         return match.competition
 
@@ -48,8 +49,8 @@ def format_intro_headline(match):
 # generate a headline for the selected match
 def generate_headline(match):
    
-    str_headline_victory = " {} {} {} with a score of {}-{}"
-    str_headline_draw = " {} drew {} {}-{}"
+    str_headline_victory = " {} {} {} ({}-{})"
+    str_headline_draw = " {} {} {} ({}-{})"
     # str_headline_cupwin = " {} won the {} cup. {} {} {} with a final score of ({},{})"
     str_headline_body = ""
     if match:
@@ -83,4 +84,4 @@ def get_otd_headline(date_of_interest = date.today()):
     if config.environment == "DEV":
         print(headline)
 
-get_otd_headline(date(2019, 1,1))
+get_otd_headline()

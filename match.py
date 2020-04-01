@@ -40,7 +40,7 @@ def calc_result_myteam_first(score):
     return result
 
 def save_matches_to_file(fname_out, matches):
-    with open(fname_out, 'w', newline='', encoding='utf8') as f:
+    with open(fname_out, 'a', newline='', encoding='utf8') as f:
         writer = csv.writer(f)
         for output_match in matches:
             writer.writerow([output_match.date.strftime("%Y-%m-%d"), output_match.competition, output_match.competition_round, output_match.place, output_match.opponent,output_match.result,str(output_match.score[0])+"-"+str(output_match.score[1]), output_match.penalty_score, output_match.goal_scorers])
