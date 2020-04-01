@@ -129,3 +129,13 @@ def test_load_data_match_data():
     assert match_of_interest.result == 'L'
     assert match_of_interest.score == (1,6)
 
+def test_format_competition_round_headline_noround():
+    new_match = match.Match(date(2019, 1,1), "PREM","2","MAN U",'H')
+    new_match.set_result_data('L',(5,1),None,None)
+    assert onthisday.format_competition_round_headline(new_match).find("round") != -1
+
+def test_format_competition_round_headline_noround():
+    new_match = match.Match(date(2019, 1,1), "PREM","","MAN U",'H')
+    new_match.set_result_data('L',(5,1),None,None)
+    assert onthisday.format_competition_round_headline(new_match).find("round") == -1
+

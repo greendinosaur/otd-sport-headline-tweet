@@ -35,16 +35,13 @@ def parse_and_save_dataset(fname_in, fname_out):
         if found_myteam:
             result = ('W' if everton_score > opponent_score else ('L' if everton_score < opponent_score else 'D'))
             loaded_match = match.Match(match_date,match_details[2],'',opponent,place)
-            loaded_match.set_result_data(result,match_details[7]+ "-"+ match_details[8],"","")
+            loaded_match.set_result_data(result,tuple(match_details[7],match_details[8]),"","")
             matches.append(loaded_match)
 
 
     file_in.close()
+    match.save_matches_to_file(fname_out, matches)
 
-    with open(fname_out, 'w', newline='', encoding='utf8') as f:
-        writer = csv.writer(f)
-        for output_match in matches:
-            writer.writerow([output_match.date.strftime("%Y-%m-%d"), output_match.competition, output_match.competition_round, output_match.place, output_match.opponent,output_match.result,output_match.score, output_match.penalty_score, output_match.goal_scorers])
-
+   
 
 parse_and_save_dataset("data/EFL_results.csv", "data/Everton_results.csv")

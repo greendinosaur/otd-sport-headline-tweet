@@ -48,8 +48,8 @@ def format_intro_headline(match):
 # generate a headline for the selected match
 def generate_headline(match):
    
-    str_headline_victory = " {} {} {} with a score of ({},{})"
-    str_headline_draw = " {} drew {} ({},{})"
+    str_headline_victory = " {} {} {} with a score of {}-{}"
+    str_headline_draw = " {} drew {} {}-{}"
     # str_headline_cupwin = " {} won the {} cup. {} {} {} with a final score of ({},{})"
     str_headline_body = ""
     if match:
@@ -83,4 +83,4 @@ def get_otd_headline(date_of_interest = date.today()):
     if config.environment == "DEV":
         print(headline)
 
-get_otd_headline()
+get_otd_headline(date(2019, 1,1))
