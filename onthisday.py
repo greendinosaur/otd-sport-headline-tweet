@@ -22,7 +22,6 @@ def load_matches_data(date_of_interest, fname):
             matches.append(loaded_match)
 
     file_in.close()
-    print("found matches:",len(matches))
     return matches
   
 # given a list of matches, choose one at random
@@ -57,11 +56,11 @@ def generate_headline(match):
         # now generate the headline
         excitement_index = calc_excitement_index(match)
         if excitement_index >= 2:
-            str_headline_body = str_headline_victory.format(config.my_team,"beat", match.opponent,match.score[0],match.score[1])
+            str_headline_body = str_headline_victory.format(config.MY_TEAM,"beat", match.opponent,match.score[0],match.score[1])
         elif excitement_index < 0:
-            str_headline_body = str_headline_victory.format(config.my_team, "lost to", match.opponent,match.score[0],match.score[1])
+            str_headline_body = str_headline_victory.format(config.MY_TEAM, "lost to", match.opponent,match.score[0],match.score[1])
         else:
-            str_headline_body = str_headline_draw.format(config.my_team, "drew with", match.opponent, match.score[0], match.score[1])
+            str_headline_body = str_headline_draw.format(config.MY_TEAM, "drew with", match.opponent, match.score[0], match.score[1])
     else:
         return "No game played on this date"
     
@@ -78,10 +77,22 @@ def calc_excitement_index(match):
         return (1 if match.score[0] > 0 else 0)
 
 def get_otd_headline(date_of_interest = date.today()):
-    all_matches = load_matches_data(date_of_interest, config.data_input)
+    # defaults to today's date
+    all_matches = load_matches_data(date_of_interest, config.DATA_INPUT)
     selected_match = choose_random_match(all_matches)
     headline = generate_headline(selected_match)
-    if config.environment == "DEV":
+    if config.ENVIRONMENT == "DEV":
         print(headline)
+
+def tweet_headline(headline):
+    # Authenticate to Twitter
+    auth = tweepy.OAuthHandler(config.CONSUMER_KEY, config.CONSUMER_SECRET)
+    auth.set_access_token(config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
+
+    # Create API object
+    api = tweepy.API(auth)
+
+    # Create a tweet
+    api.update_status(headline)
 
 get_otd_headline()

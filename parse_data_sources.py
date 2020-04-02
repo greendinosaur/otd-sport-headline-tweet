@@ -20,13 +20,13 @@ def parse_and_save_dataset(fname_in, fname_out):
         my_team_score = -1
         opponent_score = -1
         result = ''
-        if match_details[5] == config.my_team: # my_team is the home team
+        if match_details[5] == config.MY_TEAM: # MY_TEAM is the home team
             found_myteam = True   
             opponent = match_details[6]
             my_team_score = int(match_details[7])
             opponent_score = int(match_details[8])
             place = ('H' if match_details[4] == "TRUE" else 'N')    
-        elif match_details[6] == config.my_team: # my_team is the away team
+        elif match_details[6] == config.MY_TEAM: # MY_TEAM is the away team
             found_myteam = True
             opponent = match_details[5]
             my_team_score = int(match_details[8])
