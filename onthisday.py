@@ -64,7 +64,7 @@ def generate_headline(match):
     else:
         return "No game played on this date"
     
-    return format_intro_headline(match) + str_headline_body
+    return format_intro_headline(match) + str_headline_body + get_otd_suffix()
 
 def calc_excitement_index(match):
     # use the differences in the scores to determine how exciting the game was
@@ -76,13 +76,17 @@ def calc_excitement_index(match):
     elif score_diff == 0: # a draw
         return (1 if match.score[0] > 0 else 0)
 
+def get_otd_suffix():
+    return " " + config.TAGS
+
 def get_otd_headline(date_of_interest = date.today()):
     # defaults to today's date
     all_matches = load_matches_data(date_of_interest, config.DATA_INPUT)
     selected_match = choose_random_match(all_matches)
     headline = generate_headline(selected_match)
-    if config.ENVIRONMENT == "DEV":
-        print(headline)
+    return headline
+    #if config.ENVIRONMENT == "DEV":
+    #    print(headline)
 
 def tweet_headline(headline):
     # Authenticate to Twitter
@@ -95,4 +99,4 @@ def tweet_headline(headline):
     # Create a tweet
     api.update_status(headline)
 
-get_otd_headline()
+# get_otd_headline()
