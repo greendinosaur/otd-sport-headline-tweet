@@ -11,7 +11,7 @@ It can be customised to suit any sports team and sports involve two competing te
 * A suitable data file containing the historic match data
 
 ## Data-file format
-The data file containing the matches needs to be a csv file with the following data fields per row. Take a look at test_matches.csv in the tests folder for examples.
+The data file containing the matches needs to be a csv file with the following data fields per row. Take a look at [test_matches.csv](tests/test_matches.csv) in the tests folder for examples.
 
 * Match date in the format YYYY-m-d e.g. 1980-11-08
 * Name of the competition
@@ -23,7 +23,10 @@ The data file containing the matches needs to be a csv file with the following d
 * Penalty shootout score as n-m in terms of the team of interest, no value if no data
 * List of tuples with the time and name of team of interest scorers e.g. [(15,"Sharpe")], no value if no data
 
-For example, 1980-11-08,Premier League 1980/1981,16. Round,A,Norwich City,L,1-2,,
+For example, 
+```bash
+ 1980-11-08,Premier League 80/81,Matchday 16,A,Norwich City,L,1-2,,
+```
 
 ## Installing the application
 1. Create your own [fork of this
