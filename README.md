@@ -7,6 +7,7 @@ It can be customised to suit any sports team and sports involve two competing te
 ## Pre-requisites
 * Python 3.x
 * [tweepy library](http://www.tweepy.org/) installed
+* [beautiful soup](https://pypi.org/project/beautifulsoup4/) if you want to use some of the helper functions to scrape result data of websites
 * A bot account registered with [Twitter](https://developer.twitter.com/en) if you intend to tweet the match directly to twitter
 * A suitable data file containing the historic match data
 
@@ -44,6 +45,9 @@ For example,
 python3 main.py
 ```
 Will generate a headline which is tweeted automatically and also printed to the terminal.
+
+# Sourcing data
+Check out [scrape_data.py](scrape_data.py) for an example of using Beautiful Soup to scare a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script
 
 # TODO
 * Penalty shootout scores and scorers are not used
