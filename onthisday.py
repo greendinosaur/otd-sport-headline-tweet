@@ -18,7 +18,7 @@ def load_matches_data(date_of_interest, fname):
         if match_date.day == date_of_interest.day and match_date.month == date_of_interest.month:
             # found a matching date
             loaded_match = match.Match(match_date,match_details[1],match_details[2],match_details[4],match_details[3])
-            loaded_match.set_result_data(match_details[5],tuple([int (n) for n in match_details[6].split('-')]),"","")
+            loaded_match.set_result_data(match_details[5],tuple([int (n) for n in match_details[6].split('-')]))
             matches.append(loaded_match)
 
     file_in.close()
@@ -45,20 +45,25 @@ def format_intro_headline(match):
     str_otd_intro = "OTD on {}, in the {}, "
     return str_otd_intro.format(match.date.strftime("%d %b, %Y"), format_competition_round_headline(match))
 
+def generate_extra_time_headline(match):
+    str_nt_details = ("" if match.normal_time == "NT" else (" after extra time" if match.normal_time=="AET" else " in penalties"))
+    return str_nt_details   
+
 # generate a headline for the selected match
 def generate_headline(match):
    
-    str_headline_victory = " {} {} {} ({}-{})"
+    str_headline_victory = " {} {} {} ({}-{}){}"
     str_headline_draw = " {} {} {} ({}-{})"
-    # str_headline_cupwin = " {} won the {} cup. {} {} {} with a final score of ({},{})"
     str_headline_body = ""
+    str_nt_details = ""
     if match:
         # now generate the headline
+        str_nt_details = generate_extra_time_headline(match)
         excitement_index = calc_excitement_index(match)
         if excitement_index >= 2:
-            str_headline_body = str_headline_victory.format(config.MY_TEAM,"beat", match.opponent,match.score[0],match.score[1])
+            str_headline_body = str_headline_victory.format(config.MY_TEAM,"beat", match.opponent,match.score[0],match.score[1],str_nt_details)
         elif excitement_index < 0:
-            str_headline_body = str_headline_victory.format(config.MY_TEAM, "lost to", match.opponent,match.score[0],match.score[1])
+            str_headline_body = str_headline_victory.format(config.MY_TEAM, "lost to", match.opponent,match.score[0],match.score[1],str_nt_details)
         else:
             str_headline_body = str_headline_draw.format(config.MY_TEAM, "drew with", match.opponent, match.score[0], match.score[1])
     else:

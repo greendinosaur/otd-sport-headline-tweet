@@ -36,7 +36,7 @@ def parse_and_save_dataset(fname_in, fname_out):
         if found_myteam:
             result = ('W' if my_team_score > opponent_score else ('L' if my_team_score < opponent_score else 'D'))
             loaded_match = match.Match(match_date,match_details[2],'',opponent,place)
-            loaded_match.set_result_data(result,tuple(match_details[7],match_details[8]),"","")
+            loaded_match.set_result_data(result,tuple(match_details[7],match_details[8]))
             matches.append(loaded_match)
 
 

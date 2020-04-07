@@ -5,13 +5,19 @@ from datetime import date
 from datetime import datetime
 import time
 
+WF_URL="https://www.worldfootball.net"
+
 def parse_score(score):
     # 2:1 (0:1, 1:1) aet
+    # score string could have aet or pso meaning after extra time or penalty shootout
+    # the first score shown is the end score which may be the penalty shoot out if it was a pso
     scores = score.split(" ")
-    return tuple([int (n) for n in scores[0].split(":")])
+    normal_time = ("AET" if score.find("aet")>-1 else ("PSO" if score.find("pso")>-1 else "NT"))
+    print(normal_time)
+    return tuple([int (n) for n in scores[0].split(":")]),normal_time
 
 def scrape_worldfootball(team, year):
-    url = "https://www.worldfootball.net/teams/{}/{}/3/"
+    url = WF_URL + "/teams/{}/{}/3/"
     page = requests.get(url.format(team, year))
     soup = BeautifulSoup(page.text, 'html.parser')
 
@@ -21,6 +27,8 @@ def scrape_worldfootball(team, year):
     score = (1,1)
     matches = []
     new_match = None
+    match_report = ""
+    normal_time="NT"
     for div in div_list_box:
         div_class_data = div.find("div",{"class":"data"})
         if div_class_data:
@@ -53,15 +61,13 @@ def scrape_worldfootball(team, year):
                                     print(opponent)
                                     # some of the matches have a results page linked from the score
                                     if cols[6].find("a"):
-                                        score = parse_score(cols[6].find("a").contents[0].strip())
-                                        print(score)
-                                        print(match.calc_result_myteam_first(score))
+                                        score,normal_time = parse_score(cols[6].find("a").contents[0].strip())
+                                        match_report = WF_URL + cols[6].find("a").get("href") # get the match report web link
                                     else:
-                                        score = parse_score(cols[6].contents[0].strip())
-                                        print(score)
-                                        print(match.calc_result_myteam_first(score))
+                                        score,normal_time = parse_score(cols[6].contents[0].strip())
+                                        match_report = ""
                                     new_match = match.Match(date, competition,competition_round,opponent,location)
-                                    new_match.set_result_data(match.calc_result_myteam_first(score), score, None, None)
+                                    new_match.set_result_data(match.calc_result_myteam_first(score), score,normal_time,match_report)
                                     matches.append(new_match)
                                     # TD[6] is score with everton first, shows 2:1 (0:1,1:1) aet
                                     # final score is before the brackets, in the brackets may show half time and at end of normal tim
@@ -73,11 +79,11 @@ def scrape_worldfootball(team, year):
     return matches
 
 # get the data and save to file
-def get_and_saveworldfootball(club, start_year, end_year):
+def get_and_saveworldfootball(club, start_year, end_year, fname):
     for i in range(start_year,end_year+1):
         print("getting data for year", i)
         matches = scrape_worldfootball(club,str(i))
-        match.save_matches_to_file("data/everton_wof.csv", matches)
+        match.save_matches_to_file(fname, matches)
         time.sleep(3)
 
-get_and_saveworldfootball("everton-fc", 2019,2020)
+get_and_saveworldfootball("everton-fc", 1980,2019,"data/everton_wof_new.csv")

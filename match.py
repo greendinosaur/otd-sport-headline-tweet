@@ -18,21 +18,25 @@ class Match:
         self.place = place # A, H, N
         self.competition = competition
         self.competition_round = competition_round
+        self.normal_time = "NT"
+        self.match_report = "" # URL to a web-page with a detailed match report
 
-    def set_result_data(self, result, score, penalty_score=None, goal_scorers=None):
+    def set_result_data(self, result, score, normal_time="NT", match_report_url=""):
         """ sets details about the actual result between the team and the opponent
 
             result - whether the match was a W, L or D for the team
             score  - the end of match score as a tuple (n as int, m as int) in relation to the team
-            penalty_score - a tuple of any penalty shootout (n as int,m as int) in relation to the team
-            goal_scorers - a list of tuples (scorer as string, time as int) for the team
+            normal_time - a flag indicates whether the score was at the end of normal time ("NT"), extra time ("AET") or penalty shoot-out ("PST")
+            match_report_url - a webpage that contains a detailed match report
 
         """
         self.result = result
-        self.score = score # 
-        self.penalty_score = penalty_score # a tuple in relation to home team
-        self.goal_scorers = goal_scorers # a list of tuples containing the goal scorers and times of the goals
-
+        self.score = score 
+        self.normal_time = normal_time
+        self.match_report_url = match_report_url
+        
+    def set_match_report(self, match_report_url):
+        self.match_report_url = match_report_url
 
 def calc_result_traditional(location, score):
     """ calculates the result from the team's perspective
@@ -69,6 +73,6 @@ def save_matches_to_file(fname_out, matches):
     with open(fname_out, 'a', newline='', encoding='utf8') as f:
         writer = csv.writer(f)
         for output_match in matches:
-            writer.writerow([output_match.date.strftime("%Y-%m-%d"), output_match.competition, output_match.competition_round, output_match.place, output_match.opponent,output_match.result,str(output_match.score[0])+"-"+str(output_match.score[1]), output_match.penalty_score, output_match.goal_scorers])
+            writer.writerow([output_match.date.strftime("%Y-%m-%d"), output_match.competition, output_match.competition_round, output_match.place, output_match.opponent,output_match.result,str(output_match.score[0])+"-"+str(output_match.score[1]), output_match.normal_time, output_match.match_report_url])
 
 

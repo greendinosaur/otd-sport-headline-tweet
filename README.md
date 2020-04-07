@@ -7,7 +7,7 @@ It can be customised to suit any sports team and sports involve two competing te
 ## Pre-requisites
 * Python 3.x
 * [tweepy library](http://www.tweepy.org/) installed
-* [beautiful soup](https://pypi.org/project/beautifulsoup4/) if you want to use some of the helper functions to scrape result data of websites
+* [beautiful soup](https://pypi.org/project/beautifulsoup4/) if you want to use some of the helper functions to scrape result data off websites
 * A bot account registered with [Twitter](https://developer.twitter.com/en) if you intend to tweet the match directly to twitter
 * A suitable data file containing the historic match data
 
@@ -21,12 +21,12 @@ The data file containing the matches needs to be a csv file with the following d
 * Opponent
 * Result in terms of the team of interest. One of W, L, D
 * Final score as n-m in terms of the team of interest e.g. 1-2 would be interepreted as the team of interest lost by 2 goals to 1
-* Penalty shootout score as n-m in terms of the team of interest, no value if no data
-* List of tuples with the time and name of team of interest scorers e.g. [(15,"Sharpe")], no value if no data
+* Normal time flag indicating whether the final score was in normal time (NT), after extra time (AET) or a penalty shootout score (PST)
+* Match report URL to a webpage that gives a full report on the game
 
 For example, 
 ```bash
- 1980-11-08,Premier League 80/81,Matchday 16,A,Norwich City,L,1-2,,
+ 2020-03-01,Premier League 19/20,Matchday 28,H,Man. Utd.,D,1-1,NT,https://www.premierleague.com/match/46878
 ```
 
 ## Installing the application
@@ -38,20 +38,19 @@ For example,
   ```
 
 ## Configuring the application
-[config.py](config.py) contains the various parameters required to generate a headline including the path to the data file and the twitter keys and secrets. Update the parameters to suit you.
+[config.py](config.py) contains the various parameters required to generate a headline including the path to the data file and the twitter keys and secrets. Update the parameters to suit you. Note the ENVIRONMENT variable is used to control whether the tweet is sent or not. If ENVIRONMENT is set to DEV then no tweet is sent and the headline is just generated and printed to the terminal.
 
 ## Running the application
 ```bash
 python3 main.py
 ```
-Will generate a headline which is tweeted automatically and also printed to the terminal.
+Will generate a headline which is tweeted automatically (depending on the ENVIRONMENT setting in the config file) and also printed to the terminal.
 
 # Sourcing data
 Check out [scrape_data.py](scrape_data.py) for an example of using Beautiful Soup to scare a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script
 
 # TODO
-* Penalty shootout scores and scorers are not used
-* Does not distinguish between final score, aet, or pen shootout
+* Amend headline to show URL to match report
 * Generate more exciting headlines
 
 # License
