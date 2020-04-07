@@ -47,7 +47,7 @@ python3 main.py
 Will generate a headline which is tweeted automatically (depending on the ENVIRONMENT setting in the config file) and also printed to the terminal.
 
 # Sourcing data
-Check out [scrape_data.py](scrape_data.py) for an example of using Beautiful Soup to scare a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script
+Check out [scrape_data.py](scrape_data.py) for an example of using Beautiful Soup to scrape a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script.
 
 # TODO
 * Amend headline to show URL to match report
