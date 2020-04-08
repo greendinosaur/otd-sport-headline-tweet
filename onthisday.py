@@ -69,14 +69,14 @@ def generate_headline(match):
     else:
         return "No game played on this date"
     
-    return format_intro_headline(match) + str_headline_body + get_otd_suffix()
+    return config.EMOJI_PREFIX + format_intro_headline(match) + str_headline_body + get_otd_suffix()
 
 def calc_excitement_index(match):
     # use the differences in the scores to determine how exciting the game was
     score_diff = abs(match.score[0] - match.score[1])
     if score_diff > 3:  # a big win
         return (3 if match.result == 'W' else -3)
-    elif score_diff > 0: # a narrow win
+    elif score_diff > 0: # a narrow win 
         return (2 if match.result =='W' else -2)
     elif score_diff == 0: # a draw
         return (1 if match.score[0] > 0 else 0)
@@ -90,8 +90,7 @@ def get_otd_headline(date_of_interest = date.today()):
     selected_match = choose_random_match(all_matches)
     headline = generate_headline(selected_match)
     return headline
-    #if config.ENVIRONMENT == "DEV":
-    #    print(headline)
+   
 
 def tweet_headline(headline):
     # Authenticate to Twitter
@@ -103,5 +102,6 @@ def tweet_headline(headline):
 
     # Create a tweet
     api.update_status(headline)
+    # api.update_status(config.EMOJI_PREFIX)
 
 # get_otd_headline()
