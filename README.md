@@ -3,6 +3,9 @@ This project is a sports headline generator that will look up sports results for
 
 It can be customised to suit any sports team and sports involve two competing teams. The main consideration is sourcing an appropriate dataset and massaging the data into the required format.
 
+An example tweet is:
+![Image of example tweet](docs/example_otd_tweet.png)
+
 # Usage
 ## Pre-requisites
 * Python 3.x
@@ -39,6 +42,16 @@ For example,
 
 ## Configuring the application
 [config.py](config.py) contains the various parameters required to generate a headline including the path to the data file and the twitter keys and secrets. Update the parameters to suit you. Note the ENVIRONMENT variable is used to control whether the tweet is sent or not. If ENVIRONMENT is set to DEV then no tweet is sent and the headline is just generated and printed to the terminal.
+
+[emoji.csv](data/emoji.csv) contains different emojis that are shown based on a calculated excitement index. This index is calculated from the score of a matcb with: 
+* 3 being a big win for the team of interest
+* 2 is a small win
+* 1 is a score draw
+* 0 is a nil-nil
+* -1 is a small loss
+* -3 is a large loss
+
+The file is a csv file with the first column being the excitement index and the second being a string representing the unicode character.
 
 ## Running the application
 ```bash
