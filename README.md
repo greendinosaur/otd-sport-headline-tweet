@@ -43,6 +43,8 @@ For example,
 ## Configuring the application
 [config.py](config.py) contains the various parameters required to generate a headline including the path to the data file and the twitter keys and secrets. Update the parameters to suit you. Note the ENVIRONMENT variable is used to control whether the tweet is sent or not. If ENVIRONMENT is set to DEV then no tweet is sent and the headline is just generated and printed to the terminal.
 
+Make sure you have an appopriate data file containing match scores for your team as described above.
+
 [emoji.csv](data/emoji.csv) contains different emojis that are shown based on a calculated excitement index. This index is calculated from the score of a matcb with: 
 * 3 being a big win for the team of interest
 * 2 is a small win
