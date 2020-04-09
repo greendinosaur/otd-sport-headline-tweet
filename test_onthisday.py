@@ -3,6 +3,7 @@ from datetime import date
 import onthisday
 import match
 
+TEST_DATA_FILE = "tests/test_matches.csv"
 
 def test_choose_random_match_none():
     assert onthisday.choose_random_match(None) == None
@@ -111,26 +112,21 @@ def test_format_intro_headline_roundnotnil():
     new_match.set_result_data('L',(5,1))
     assert onthisday.format_intro_headline(new_match).find("round") != -1
 
-def test_generate_headline_pst():
-    new_match = match.Match(date(2019, 1,1), "PREM","","MAN U",'H')
-    new_match.set_result_data('W',(4,3),"PST","")
-    assert onthisday.generate_headline(new_match).find("penalties") > -1
-
 
 def test_load_data_datematches():
     date_of_interest = date(2019,8,15)
-    matches = onthisday.load_matches_data(date_of_interest,"tests/test_matches.csv")
+    matches = onthisday.load_matches_data(date_of_interest,TEST_DATA_FILE)
     print(matches)
     assert len(matches) == 1
 
 def test_load_data_date_nomatches():
     date_of_interest = date(2019,2,15)
-    matches = onthisday.load_matches_data(date_of_interest,"tests/test_matches.csv")
+    matches = onthisday.load_matches_data(date_of_interest,TEST_DATA_FILE)
     assert len(matches) == 0
 
 def test_load_data_date_twomatches():
     date_of_interest = date(2019,8,16)
-    matches = onthisday.load_matches_data(date_of_interest,"tests/test_matches.csv")
+    matches = onthisday.load_matches_data(date_of_interest,TEST_DATA_FILE)
     assert len(matches) == 2
 
 def test_load_data_match_data():

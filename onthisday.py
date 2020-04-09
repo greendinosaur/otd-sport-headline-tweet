@@ -5,6 +5,7 @@ from datetime import datetime
 import match
 import csv
 import config
+import emoji
 
 
 def load_matches_data(date_of_interest, fname):
@@ -52,20 +53,22 @@ def generate_extra_time_headline(match):
 # generate a headline for the selected match
 def generate_headline(match):
    
-    str_headline_victory = " {} {} {} ({}-{}){}"
-    str_headline_draw = " {} {} {} ({}-{})"
+    emoji.load_emoji_data("data/emoji.csv")
+    str_headline_victory = " {} {} {} ({}-{}){} {}"
+    str_headline_draw = " {} {} {} ({}-{}) {}"
     str_headline_body = ""
     str_nt_details = ""
     if match:
         # now generate the headline
         str_nt_details = generate_extra_time_headline(match)
         excitement_index = calc_excitement_index(match)
+        selected_emoji = emoji.generate_emoji(excitement_index)
         if excitement_index >= 2:
-            str_headline_body = str_headline_victory.format(config.MY_TEAM,"beat", match.opponent,match.score[0],match.score[1],str_nt_details)
+            str_headline_body = str_headline_victory.format(config.MY_TEAM,"beat", match.opponent,match.score[0],match.score[1],str_nt_details,selected_emoji)
         elif excitement_index < 0:
-            str_headline_body = str_headline_victory.format(config.MY_TEAM, "lost to", match.opponent,match.score[0],match.score[1],str_nt_details)
+            str_headline_body = str_headline_victory.format(config.MY_TEAM, "lost to", match.opponent,match.score[0],match.score[1],str_nt_details,selected_emoji)
         else:
-            str_headline_body = str_headline_draw.format(config.MY_TEAM, "drew with", match.opponent, match.score[0], match.score[1])
+            str_headline_body = str_headline_draw.format(config.MY_TEAM, "drew with", match.opponent, match.score[0], match.score[1],selected_emoji)
     else:
         return "No game played on this date"
     

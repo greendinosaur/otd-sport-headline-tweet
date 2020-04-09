@@ -1,9 +1,9 @@
 import random
 
 # helper file to manage emojis to show in a tweet
-excitement_index = [-3,-2,0,1,2,3]
+EXCITEMENT_INDEX = [-3,-2,0,1,2,3]
 dict_default_values = [[],[],[],[],[],[]] 
-emoji_dict = dict(zip(excitement_index,dict_default_values)) # stores the different emojis mapped to the excitement index
+emoji_dict = dict(zip(EXCITEMENT_INDEX,dict_default_values)) # stores the different emojis mapped to the excitement index
 
 
 def load_emoji_data(fname):
@@ -23,7 +23,12 @@ def get_random_emoji(index):
     # chooses a random emoji based on the supplied value
     # this will be a string
     emoji = "" # return empty string if no value is present
-    if index in excitement_index and len(emoji_dict[index]) > 0:
+    if index in EXCITEMENT_INDEX and len(emoji_dict[index]) > 0:
         emoji = random.choice(emoji_dict[index])
 
     return emoji
+
+def generate_emoji(excitement_index):
+    # generates an emoji string based on the excitement index
+    emoji = get_random_emoji(excitement_index)
+    return chr(int(emoji,base=16))

@@ -35,8 +35,6 @@ class Match:
         self.normal_time = normal_time
         self.match_report_url = match_report_url
         
-    def set_match_report(self, match_report_url):
-        self.match_report_url = match_report_url
 
 def calc_result_traditional(location, score):
     """ calculates the result from the team's perspective
