@@ -6,6 +6,10 @@ import config
 
 TEST_DATA_FILE = "tests/test_matches.csv"
 
+@classmethod
+def setup_class(cls):
+    config.DATA_INPUT = TEST_DATA_FILE
+
 def test_generate_headline_won():
     matches = []
     new_match = match.Match(date.today(), "PREM","1","MAN U",'H')
@@ -73,6 +77,7 @@ def test_format_competition_round_headline_noround():
 def test_get_otd_headline():
     # need to reset the config parameter to the test data file
     config.DATA_INPUT = TEST_DATA_FILE
-    headline = onthisday.get_otd_headline(date(2012,8,16))
+    headline = onthisday.get_otd_headline(date(2012,8,17))
     assert headline.find("Liverpool") > -1
     assert headline.find("Premier League") > -1
+

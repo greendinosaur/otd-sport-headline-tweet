@@ -120,3 +120,13 @@ def test_save_matches_to_file():
 
     if os.path.exists("tests/test_save.csv"):
         os.remove("tests/test_save.csv")
+
+def test_calc_is_cup_winner_winner():
+    new_match = match.Match(date.today(), "FA Cup","Final","MAN U",'N')
+    new_match.set_result_data('W',(2,0),"AET","http://somewebsite")
+    assert new_match.calc_is_cup_winner() == 1
+
+def test_calc_is_cup_winner_lost():
+    new_match = match.Match(date.today(), "FA Cup","Final","MAN U",'N')
+    new_match.set_result_data('L',(0,1),"AET","http://somewebsite")
+    assert new_match.calc_is_cup_winner() == 0

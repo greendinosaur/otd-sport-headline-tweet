@@ -48,7 +48,15 @@ class Match:
         self.normal_time = normal_time
         self.match_report_url = match_report_url
         self.excitement_index = self.calc_excitement_index()
-        
+
+    def calc_is_cup_winner(self):
+        # determines if the match was a final and if won
+        # assumes the team is the winner of a cup!
+        if self.result == 'W' and self.competition_round == "Final":
+            return 1
+        else:
+            return 0
+
 
 def calc_result_myteam_first(score):
     """ Determines whether the team won, drew or lost based on the score 
