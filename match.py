@@ -1,4 +1,7 @@
 import csv
+from datetime import date
+from datetime import datetime
+import random
 
 class Match:
     """ Stores key data fields about a specific match for the team """
@@ -21,6 +24,16 @@ class Match:
         self.normal_time = "NT"
         self.match_report = "" # URL to a web-page with a detailed match report
 
+    def calc_excitement_index(self):
+        # use the differences in the scores to determine how exciting the game was
+        score_diff = abs(self.score[0] - self.score[1])
+        if score_diff > 3:  # a big win
+            return (3 if self.result == 'W' else -3)
+        elif score_diff > 0: # a narrow win 
+            return (2 if self.result =='W' else -2)
+        elif score_diff == 0: # a draw
+            return (1 if self.score[0] > 0 else 0)
+
     def set_result_data(self, result, score, normal_time="NT", match_report_url=""):
         """ sets details about the actual result between the team and the opponent
 
@@ -34,30 +47,8 @@ class Match:
         self.score = score 
         self.normal_time = normal_time
         self.match_report_url = match_report_url
+        self.excitement_index = self.calc_excitement_index()
         
-
-def calc_result_traditional(location, score):
-    """ calculates the result from the team's perspective
-
-        location is where the match was played (home or away or neutral)
-        score is a tuple (H, A) of traditional score with the home team first
-        returns a 'W', 'L' or 'D'
-    """ 
-    if location == 'H' or location == 'N':
-        if score[0] > score[1]:
-        # home win
-            return 'W'
-        elif score[0] < score[1]:
-            return 'L'
-        else:
-            return 'D'
-    elif location == 'A':
-        if score[0] > score[1]:
-            return 'L'
-        elif score[0] < score[1]:
-            return 'W'
-        else:
-            return 'D'
 
 def calc_result_myteam_first(score):
     """ Determines whether the team won, drew or lost based on the score 
@@ -72,5 +63,32 @@ def save_matches_to_file(fname_out, matches):
         writer = csv.writer(f)
         for output_match in matches:
             writer.writerow([output_match.date.strftime("%Y-%m-%d"), output_match.competition, output_match.competition_round, output_match.place, output_match.opponent,output_match.result,str(output_match.score[0])+"-"+str(output_match.score[1]), output_match.normal_time, output_match.match_report_url])
+
+def load_matches_data(date_of_interest, fname):
+    # load the matches data and returns those whose date (day and month) match
+    file_in = open(fname, "r")
+    matches = []
+    loaded_match = None
+    for line in file_in:
+        match_details = line.split(',')
+        match_date = datetime.strptime(match_details[0], "%Y-%m-%d")
+        if match_date.day == date_of_interest.day and match_date.month == date_of_interest.month:
+            # found a matching date
+            loaded_match = Match(match_date,match_details[1],match_details[2],match_details[4],match_details[3])
+            loaded_match.set_result_data(match_details[5],tuple([int (n) for n in match_details[6].split('-')]),match_details[7],match_details[8].rstrip())
+            matches.append(loaded_match)
+
+    file_in.close()
+    return matches
+
+# given a list of matches, choose one at random
+def choose_random_match(matches):
+    # choose a random match
+    if matches:
+        return random.choice(matches)
+    else:
+        return None
+
+
 
 

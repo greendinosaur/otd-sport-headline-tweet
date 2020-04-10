@@ -1,5 +1,4 @@
 import tweepy
-import random
 from datetime import date
 from datetime import datetime
 import match
@@ -7,31 +6,6 @@ import csv
 import config
 import emoji
 
-
-def load_matches_data(date_of_interest, fname):
-    # load the matches data and returns those whose date (day and month) match
-    file_in = open(fname, "r")
-    matches = []
-    loaded_match = None
-    for line in file_in:
-        match_details = line.split(',')
-        match_date = datetime.strptime(match_details[0], "%Y-%m-%d")
-        if match_date.day == date_of_interest.day and match_date.month == date_of_interest.month:
-            # found a matching date
-            loaded_match = match.Match(match_date,match_details[1],match_details[2],match_details[4],match_details[3])
-            loaded_match.set_result_data(match_details[5],tuple([int (n) for n in match_details[6].split('-')]))
-            matches.append(loaded_match)
-
-    file_in.close()
-    return matches
-  
-# given a list of matches, choose one at random
-def choose_random_match(matches):
-    # choose a random match
-    if matches:
-        return random.choice(matches)
-    else:
-        return None
 
 # generate the headline with details of the round and competition
 def format_competition_round_headline(match):
@@ -61,7 +35,7 @@ def generate_headline(match):
     if match:
         # now generate the headline
         str_nt_details = generate_extra_time_headline(match)
-        excitement_index = calc_excitement_index(match)
+        excitement_index = match.excitement_index
         selected_emoji = emoji.generate_emoji(excitement_index)
         if excitement_index >= 2:
             str_headline_body = str_headline_victory.format(config.MY_TEAM,"beat", match.opponent,match.score[0],match.score[1],str_nt_details,selected_emoji)
@@ -74,23 +48,13 @@ def generate_headline(match):
     
     return config.EMOJI_PREFIX + format_intro_headline(match) + str_headline_body + get_otd_suffix()
 
-def calc_excitement_index(match):
-    # use the differences in the scores to determine how exciting the game was
-    score_diff = abs(match.score[0] - match.score[1])
-    if score_diff > 3:  # a big win
-        return (3 if match.result == 'W' else -3)
-    elif score_diff > 0: # a narrow win 
-        return (2 if match.result =='W' else -2)
-    elif score_diff == 0: # a draw
-        return (1 if match.score[0] > 0 else 0)
-
 def get_otd_suffix():
     return " " + config.TAGS
 
 def get_otd_headline(date_of_interest = date.today()):
     # defaults to today's date
-    all_matches = load_matches_data(date_of_interest, config.DATA_INPUT)
-    selected_match = choose_random_match(all_matches)
+    all_matches = match.load_matches_data(date_of_interest, config.DATA_INPUT)
+    selected_match = match.choose_random_match(all_matches)
     headline = generate_headline(selected_match)
     return headline
    
@@ -105,6 +69,3 @@ def tweet_headline(headline):
 
     # Create a tweet
     api.update_status(headline)
-    # api.update_status(config.EMOJI_PREFIX)
-
-# get_otd_headline()
