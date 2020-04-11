@@ -45,7 +45,8 @@ For example,
 
 Make sure you have an appopriate data file containing match scores for your team as described above.
 
-[emoji.csv](data/emoji.csv) contains different emojis that are shown based on a calculated excitement index. This index is calculated from the score of a matcb with: 
+[emoji.csv](data/emoji.csv) contains different emojis that are shown based on a calculated excitement index. This index is calculated from the score of a match with: 
+* 4 if the team have won a Final
 * 3 being a big win for the team of interest
 * 2 is a small win
 * 1 is a score draw
