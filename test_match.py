@@ -124,9 +124,19 @@ def test_save_matches_to_file():
 def test_calc_is_cup_winner_winner():
     new_match = match.Match(date.today(), "FA Cup","Final","MAN U",'N')
     new_match.set_result_data('W',(2,0),"AET","http://somewebsite")
-    assert new_match.calc_is_cup_winner() == 1
+    assert new_match.calc_is_cup_winner() == True
 
 def test_calc_is_cup_winner_lost():
     new_match = match.Match(date.today(), "FA Cup","Final","MAN U",'N')
     new_match.set_result_data('L',(0,1),"AET","http://somewebsite")
-    assert new_match.calc_is_cup_winner() == 0
+    assert new_match.calc_is_cup_winner() == False
+
+def test_calc_excitement_index_cupwinners():
+    new_match = match.Match(date.today(), "FA Cup","Final","MAN U",'N')
+    new_match.set_result_data('W',(5,1))
+    assert new_match.excitement_index == 4
+
+def test_calc_excitement_index_cupwinners():
+    new_match = match.Match(date.today(), "FA Cup","Final","MAN U",'N')
+    new_match.set_result_data('L',(1,5))
+    assert new_match.excitement_index == -3

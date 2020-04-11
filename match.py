@@ -24,12 +24,26 @@ class Match:
         self.normal_time = "NT"
         self.match_report = "" # URL to a web-page with a detailed match report
 
+    def calc_is_cup_winner(self):
+        # determines if the match was a final and if won
+        # assumes the team is the winner of a cup!
+        if self.result == 'W' and self.competition_round == "Final":
+            return True
+        else:
+            return False
+
     def calc_excitement_index(self):
-        # use the differences in the scores to determine how exciting the game was
+        """ determines how exciting the match was
+            if the match was a cup final and the team is a winner then that is super exciting
+            otherwise the excitement index is based on the score differential
+        """
+        if self.calc_is_cup_winner():
+            return 4
+        
         score_diff = abs(self.score[0] - self.score[1])
-        if score_diff > 3:  # a big win
+        if score_diff > 3:  # a big win for a team
             return (3 if self.result == 'W' else -3)
-        elif score_diff > 0: # a narrow win 
+        elif score_diff > 0: # a narrow win for a team
             return (2 if self.result =='W' else -2)
         elif score_diff == 0: # a draw
             return (1 if self.score[0] > 0 else 0)
@@ -48,14 +62,6 @@ class Match:
         self.normal_time = normal_time
         self.match_report_url = match_report_url
         self.excitement_index = self.calc_excitement_index()
-
-    def calc_is_cup_winner(self):
-        # determines if the match was a final and if won
-        # assumes the team is the winner of a cup!
-        if self.result == 'W' and self.competition_round == "Final":
-            return 1
-        else:
-            return 0
 
 
 def calc_result_myteam_first(score):

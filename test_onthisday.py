@@ -81,3 +81,12 @@ def test_get_otd_headline():
     assert headline.find("Liverpool") > -1
     assert headline.find("Premier League") > -1
 
+def test_cupfinal_winners():
+    new_match = match.Match(date(2019, 1,1), "FA Cup","Final","MAN U",'H')
+    new_match.set_result_data('W',(5,1))
+    assert onthisday.generate_headline(new_match).find("are champions!") != -1
+
+def test_cupfinal_losers():
+    new_match = match.Match(date(2019, 1,1), "FA Cup","Final","MAN U",'H')
+    new_match.set_result_data('L',(1,5))
+    assert onthisday.generate_headline(new_match).find("are champions!") == -1
