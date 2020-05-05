@@ -10,7 +10,7 @@ def main():
     """
     headline = onthisday.get_otd_headline()
     print(headline)
-    if config.ENVIRONMENT != "DEV":
+    if config.ENVIRONMENT != "DEV" and headline != onthisday.NO_MATCH_HEADLINE:
         print("tweeting the headline")
         onthisday.tweet_headline(headline)
 

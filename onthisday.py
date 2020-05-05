@@ -6,6 +6,8 @@ import match
 import config
 import emoji
 
+NO_MATCH_HEADLINE = "No game played on this date"
+
 def format_competition_round_headline(selected_match):
     """ formats the competition round details
 
@@ -92,7 +94,7 @@ def generate_headline(selected_match):
                                 selected_match.score[1],
                                 selected_emoji)
     else:
-        return "No game played on this date"
+        return NO_MATCH_HEADLINE
     return config.EMOJI_PREFIX + format_intro_headline(selected_match) + str_headline_body + get_otd_suffix()
 
 def get_otd_suffix():
