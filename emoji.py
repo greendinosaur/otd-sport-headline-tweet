@@ -8,6 +8,10 @@ DICT_DEFAULT_VALUES = [[], [], [], [], [], [], []]
 # stores the different emojis mapped to the excitement index
 emoji_dict = dict(zip(EXCITEMENT_INDEX, DICT_DEFAULT_VALUES))
 
+def empty_emoji_dict():
+    for key in emoji_dict.keys():
+        emoji_dict[key] = []
+
 def load_emoji_data(fname=DATA_FILE):
     """
         loads in emoji data from file

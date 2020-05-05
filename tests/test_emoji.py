@@ -1,13 +1,17 @@
 import pytest
 import emoji
 
-def test_get_random_emoji_invalidindex():
+@pytest.fixture
+def empty_emoji():
+    emoji.empty_emoji_dict()
+
+def test_get_random_emoji_invalidindex(empty_emoji):
     assert emoji.get_random_emoji(5) == ""
 
-def test_get_random_emoji_emptyindex():
+def test_get_random_emoji_emptyindex(empty_emoji):
     assert emoji.get_random_emoji(3) == ""
 
-def test_get_random_emoji_withdata():
+def test_get_random_emoji_withdata(empty_emoji):
     emoji.emoji_dict[3].append("1F615")
     assert emoji.get_random_emoji(3) == "1F615"
     emoji.emoji_dict[3].clear() # reset the dictionary
