@@ -3,6 +3,7 @@
 import onthisday
 import config
 
+
 def main():
     """ generates a headline based on a historic match
         on this day and month

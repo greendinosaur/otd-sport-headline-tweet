@@ -3,14 +3,17 @@
 import random
 
 EXCITEMENT_INDEX = [-3, -2, 0, 1, 2, 3, 4]
-DATA_FILE = "data/emoji.csv" # data file containing emojis
+DATA_FILE = "data/emoji.csv"  # data file containing emojis
 DICT_DEFAULT_VALUES = [[], [], [], [], [], [], []]
 # stores the different emojis mapped to the excitement index
 emoji_dict = dict(zip(EXCITEMENT_INDEX, DICT_DEFAULT_VALUES))
 
+
 def empty_emoji_dict():
+    global emoji_dict
     for key in emoji_dict.keys():
         emoji_dict[key] = []
+
 
 def load_emoji_data(fname=DATA_FILE):
     """
@@ -20,6 +23,7 @@ def load_emoji_data(fname=DATA_FILE):
 
         fname - the name of the file, if not provided defaults to DATA_FILE
     """
+    global emoji_dict
     file_in = open(fname, "r")
     for line in file_in:
         emoji_details = line.split(',')
@@ -29,6 +33,7 @@ def load_emoji_data(fname=DATA_FILE):
 
     file_in.close()
 
+
 def get_random_emoji(index):
     """ chooses a random emoji based on the supplied value
         ensure the data has been loaded prior to calling this function
@@ -36,11 +41,13 @@ def get_random_emoji(index):
         index - the index to look up
         returns a string representing the emoji unicode character
     """
-    emoji = "" # return empty string if no value is present
+    global emoji_dict
+    emoji = ""  # return empty string if no value is present
     if index in EXCITEMENT_INDEX and len(emoji_dict[index]) > 0:
         emoji = random.choice(emoji_dict[index])
 
     return emoji
+
 
 def generate_emoji(index):
     """ generates an emoji string based on the provided index

@@ -3,3 +3,7 @@
 .vscode
 *.numbers
 __pycache__
+config.py
+
+*.coverage
+coverage.*
