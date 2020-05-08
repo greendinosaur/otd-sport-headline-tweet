@@ -10,6 +10,8 @@ emoji_dict = dict(zip(EXCITEMENT_INDEX, DICT_DEFAULT_VALUES))
 
 
 def empty_emoji_dict():
+    """ empties out the values inside the emoji_dict 
+    """
     global emoji_dict
     for key in emoji_dict.keys():
         emoji_dict[key] = []
@@ -24,6 +26,8 @@ def load_emoji_data(fname=DATA_FILE):
         fname - the name of the file, if not provided defaults to DATA_FILE
     """
     global emoji_dict
+    empty_emoji_dict()
+
     file_in = open(fname, "r")
     for line in file_in:
         emoji_details = line.split(',')

@@ -12,7 +12,9 @@ run:
 	@python -m $(MODULE)
 
 test:
-	@pytest
+# pytest is not generating coverage data files for some reason
+# using coverage directly
+#	@pytest
 	@coverage run -m pytest 
 	@coverage xml
 
@@ -32,4 +34,4 @@ version:
 .PHONY: clean test
 
 clean:
-	rm -rf .pytest_cache .coverage .pytest_cache coverage.xml
+	rm -rf tests/__pycache__ .coverage tests/.pytest_cache coverage.xml

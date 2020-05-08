@@ -7,6 +7,14 @@ def reset_emoji_dict():
     emoji.empty_emoji_dict()
 
 
+def test_empty_emoji_dict():
+    emoji.load_emoji_data("tests/test_emoji.csv")
+    assert emoji.emoji_dict is not None
+    emoji.empty_emoji_dict()
+    assert len(emoji.emoji_dict) == len(emoji.EXCITEMENT_INDEX)
+    assert emoji.emoji_dict[0] == []
+
+
 def test_get_random_emoji_invalidindex():
     assert emoji.get_random_emoji(5) == ""
 
