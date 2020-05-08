@@ -1,7 +1,6 @@
 """ generates a sports headline based on a randomly selected match
 """
 from datetime import date
-import tweepy
 import match
 import config
 import emoji
@@ -118,20 +117,3 @@ def get_otd_headline(date_of_interest=date.today()):
     selected_match = match.choose_random_match(all_matches)
     headline = generate_headline(selected_match)
     return headline
-
-
-def tweet_headline(headline):
-    """ tweets the provided headline to twitter
-        headline is the status message to tweet
-    """
-    # Authenticate to Twitter
-    auth = tweepy.OAuthHandler(config.CONSUMER_KEY,
-                               config.CONSUMER_SECRET)
-    auth.set_access_token(config.ACCESS_TOKEN,
-                          config.ACCESS_TOKEN_SECRET)
-
-    # Create API object
-    api = tweepy.API(auth)
-
-    # Create a tweet
-    api.update_status(headline)

@@ -2,6 +2,8 @@
 .venv
 .vscode
 *.numbers
+.scannerwork
+sonar-project.properties
 __pycache__
 config.py
 

@@ -2,6 +2,7 @@
 """
 import onthisday
 import config
+import tweet
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
     print(headline)
     if config.ENVIRONMENT != "DEV" and headline != onthisday.NO_MATCH_HEADLINE:
         print("tweeting the headline")
-        onthisday.tweet_headline(headline)
+        tweet.tweet_headline(headline)
 
 
 if __name__ == "__main__":

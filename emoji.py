@@ -10,7 +10,7 @@ emoji_dict = dict(zip(EXCITEMENT_INDEX, DICT_DEFAULT_VALUES))
 
 
 def empty_emoji_dict():
-    """ empties out the values inside the emoji_dict 
+    """ empties out the values inside the emoji_dict
     """
     global emoji_dict
     for key in emoji_dict.keys():

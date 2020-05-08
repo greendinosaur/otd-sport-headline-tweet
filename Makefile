@@ -26,7 +26,8 @@ lint:
 	@echo "\n${BLUE}Running Bandit against source files...${NC}\n"
 	@bandit -r --ini setup.cfg
 
-
+sonar:
+	@sonar-scanner
 
 version:
 	@echo $(TAG)
