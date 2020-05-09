@@ -4,13 +4,22 @@ zipfile=function.zip
 lambda_function=test-otd
 data_file=data/everton_wof_new.csv
 
-# first generate the zip file
+cwd=$(pwd)
+
+# install the dependencies required into a temp folder
+echo installing dependencies
+mkdir temp_package
+pip install --target ./temp_package Tweepy
+
+# generate the zip file
 echo Generating the zip file
+# firstly add the dependencies
+cd package
+zip -r9 $cwd/$zipfile .
 
-# add python dependencies
-zip -r9 $zipfile .venv/lib/python3.7/site-packages
-
-# add code
+echo Adding custom code
+cd $cwd
+# now add code
 zip $zipfile config.py
 zip $zipfile emoji.py
 zip $zipfile match.py
@@ -27,4 +36,6 @@ echo Deploying to aws lambda
 aws lambda update-function-code --function-name $lambda_function --zip-file fileb://$zipfile
 
 # clean up
+echo cleaning up temp files
 rm $zipfile
+rm -r temp_package/
