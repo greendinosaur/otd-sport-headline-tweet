@@ -1,6 +1,5 @@
 from datetime import date
-import onthisday
-import match
+from otd import match, onthisday
 import config
 
 TEST_DATA_FILE = "tests/test_matches.csv"

@@ -1,8 +1,7 @@
 """ generates the headline and tweets it
 """
-import onthisday
+from otd import onthisday, tweet
 import config
-import tweet
 
 
 def main():

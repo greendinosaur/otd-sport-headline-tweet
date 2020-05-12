@@ -1,7 +1,6 @@
 import os
 from datetime import date
-import match
-
+from otd import match
 
 TEST_DATA_FILE = "tests/test_matches.csv"
 

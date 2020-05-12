@@ -3,7 +3,7 @@ MODULE := blueprint
 
 AWS_ZIPFILE :=function.zip
 LAMBDA_FUNCTION :=test-otd
-data_file :=data/everton_wof_new.csv
+DATA_FILE :=data/everton_wof_new.csv
 AWS_DEPLOY_OUTPUT := aws_deploy_output.json
 
 cwd:= $(shell pwd)
@@ -45,8 +45,8 @@ version:
 clean:
 	@rm -rf .pytest_cache __pycache__ tests/__pycache__ .coverage tests/.pytest_cache coverage.xml
 	@rm -rf temp_package
-	@rm $(AWS_ZIPFILE)
-	@rm $(AWS_DEPLOY_OUTPUT)
+	@rm -f $(AWS_ZIPFILE)
+	@rm -f $(AWS_DEPLOY_OUTPUT)
 
 package:
 	@echo $(cwd)
@@ -62,16 +62,13 @@ package:
 	@cd temp_package && zip -r9 $(cwd)/$(AWS_ZIPFILE) .
 	@echo Adding custom code
 	# now add code
+	@zip $(AWS_ZIPFILE) otd/*.py
 	@zip $(AWS_ZIPFILE) config.py
-	@zip $(AWS_ZIPFILE) emoji.py
-	@zip $(AWS_ZIPFILE) match.py
-	@zip $(AWS_ZIPFILE) onthisday.py
-	@zip $(AWS_ZIPFILE) tweet.py
 	@zip $(AWS_ZIPFILE) lambda_function.py
 
 	# add data files
 	@zip $(AWS_ZIPFILE) data/emoji.csv
-	@zip $(AWS_ZIPFILE) $(data_file)
+	@zip $(AWS_ZIPFILE) $(DATA_FILE)
 
 deploy:
 	@aws lambda update-function-code --function-name $(LAMBDA_FUNCTION) --zip-file fileb://$(AWS_ZIPFILE) >> $(AWS_DEPLOY_OUTPUT)

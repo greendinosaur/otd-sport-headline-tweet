@@ -48,7 +48,7 @@ class Match:
             return 3 if self.result == 'W' else -3
         elif score_diff > 0:  # a narrow win for a team
             return 2 if self.result == 'W' else -2
-        elif score_diff == 0:  # a draw
+        else:  # a draw
             return 1 if self.score[0] > 0 else 0
 
     def set_result_data(self, result, score, normal_time="NT", match_report_url=""):

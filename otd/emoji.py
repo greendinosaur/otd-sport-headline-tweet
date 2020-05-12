@@ -47,7 +47,7 @@ def get_random_emoji(index):
     """
     global emoji_dict
     emoji = ""  # return empty string if no value is present
-    if index in EXCITEMENT_INDEX and len(emoji_dict[index]) > 0:
+    if index in EXCITEMENT_INDEX and emoji_dict[index]:
         emoji = random.choice(emoji_dict[index])
 
     return emoji

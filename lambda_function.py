@@ -1,5 +1,4 @@
-import onthisday
-import tweet
+from otd import onthisday, tweet
 
 print('Loading function')
 

@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 import time
 from bs4 import BeautifulSoup
-import match
+from otd import match
 
 
 WF_URL = "https://www.worldfootball.net"
@@ -102,6 +102,3 @@ def get_and_saveworldfootball(club, start_year, end_year, fname):
         matches = scrape_worldfootball(club, str(i))
         match.save_matches_to_file(fname, matches)
         time.sleep(3)
-
-
-get_and_saveworldfootball("everton-fc", 1980, 2019, "data/everton_wof_new.csv")

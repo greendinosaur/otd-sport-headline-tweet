@@ -65,6 +65,27 @@ Will generate a headline which is tweeted automatically (depending on the ENVIRO
 # Sourcing data
 Check out [scrape_data.py](scrape_data.py) for an example of using Beautiful Soup to scrape a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script.
 
+# Deploying to AWS Lambda
+Read [docs/deploy_aws.md] (aws deployment) for information on deploying the bot to AWS Lambda.
+
+# Testing the application
+There is a test suite that can be executed via pytest. The easiest way to run the tests is via the provided Make file as this also generates coverage data.
+
+To run the tests:
+```bash
+Make test
+```
+
+To run the linters:
+```bash
+Make lint
+```
+
+To clean up:
+```bash
+Make clean
+```
+
 # TODO
 * Amend headline to show URL to match report
 * Generate more exciting headlines

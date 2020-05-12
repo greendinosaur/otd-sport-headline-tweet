@@ -1,9 +1,8 @@
 """ generates a sports headline based on a randomly selected match
 """
 from datetime import date
-import match
+from otd import match, emoji
 import config
-import emoji
 
 NO_MATCH_HEADLINE = "No game played on this date"
 

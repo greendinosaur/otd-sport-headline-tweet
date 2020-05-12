@@ -1,5 +1,5 @@
 import pytest
-import emoji
+from otd import emoji
 
 
 @pytest.fixture
