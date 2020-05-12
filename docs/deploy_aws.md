@@ -20,7 +20,7 @@ In addition to the general pre-requisites for running the bot, in order to run t
 ## Creating the function
 You can either create the function using the AWS Lambda dashboard or run a AWS CLI command to do this.
 
-The below shows the CLI command. Prior to executing the command, make sure you have the zip file containing the code. This can be generated using the [../Makefile](Makefile). Ensure the variables at the top of the Make file are correct.
+The below shows the CLI command. Prior to executing the command, make sure you have the zip file containing the code. This can be generated using the [Makefile](../Makefile). Ensure the variables at the top of the Make file are correct.
 
 Replace `<name of function>` and `<your arn>` with your specifics.
 
@@ -30,9 +30,9 @@ aws lambda create-function --function-name <name of function> --zip-file fileb:/
 ```
 
 ## Deploy the bot to AWS Lambda
-The lambda function itself is defined in the file [../lambda_function.py](lambda_function.py). This is a simple function that calls the main code to get the headline and to tweet it.
+The lambda function itself is defined in the file [lambda_function.py](../lambda_function.py). This is a simple function that calls the main code to get the headline and to tweet it.
 
-The [../Make](Makefile) deploys the lambda function and associated code and python dependencies to AWS. You will need to amend two lines at the top of this file with the name of your lambda function and the data file that contains the match data.
+The [Makefile](../Makefile) deploys the lambda function and associated code and python dependencies to AWS. You will need to amend two lines at the top of this file with the name of your lambda function and the data file that contains the match data.
 
 ```bash
 lambda_function=test-otd

@@ -63,10 +63,10 @@ python3 main.py
 Will generate a headline which is tweeted automatically (depending on the ENVIRONMENT setting in the config file) and also printed to the terminal.
 
 # Sourcing data
-Check out [scrape_data.py](scrape_data.py) for an example of using Beautiful Soup to scrape a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script.
+Check out [scrape_data.py](otd/getdata/scrape_data.py) for an example of using Beautiful Soup to scrape a website for result data. You can customise this or use it as a basis for authoring your own data sourcing script.
 
 # Deploying to AWS Lambda
-Read [docs/deploy_aws.md] (aws deployment) for information on deploying the bot to AWS Lambda.
+Read the [aws deployment guide](docs/deploy_aws.md) for information on deploying the bot to AWS Lambda.
 
 # Testing the application
 There is a test suite that can be executed via pytest. The easiest way to run the tests is via the provided Make file as this also generates coverage data.
