@@ -1,6 +1,4 @@
-# The binary to build (just the basename).
-MODULE := blueprint
-
+# Details about the files to send to AWS Lambda
 AWS_ZIPFILE :=function.zip
 LAMBDA_FUNCTION :=test-otd
 DATA_FILE :=data/everton_wof_new.csv
@@ -49,8 +47,6 @@ clean:
 	@rm -f $(AWS_DEPLOY_OUTPUT)
 
 package:
-	@echo $(cwd)
-
 	# install the dependencies required into a temp folder
 	@echo installing dependencies
 	@mkdir temp_package
@@ -58,7 +54,7 @@ package:
 
 	# generate the zip file
 	@echo Generating the zip file
-	# firstly add the dependencies
+	# firstly add the python dependencies
 	@cd temp_package && zip -r9 $(cwd)/$(AWS_ZIPFILE) .
 	@echo Adding custom code
 	# now add code
