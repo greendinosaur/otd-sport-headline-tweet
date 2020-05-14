@@ -48,7 +48,7 @@ def generate_headline(selected_match):
         match is the match used to generate the headline
         returns a string representing the headline
     """
-    emoji.load_emoji_data()
+    my_emoji = emoji.Emoji()
     str_headline_champions = " {} are champions! {} beat {} ({}-{}){} {}"
     str_headline_victory = " {} {} {} ({}-{}){} {}"
     str_headline_draw = " {} {} {} ({}-{}) {}"
@@ -58,7 +58,7 @@ def generate_headline(selected_match):
         # now generate the headline
         str_nt_details = generate_extra_time_headline(selected_match)
         excitement_index = selected_match.excitement_index
-        selected_emoji = emoji.generate_emoji(excitement_index)
+        selected_emoji = my_emoji.generate_emoji(excitement_index)
         if excitement_index == 4:  # champions
             str_headline_body = str_headline_champions.format(
                 config.MY_TEAM,

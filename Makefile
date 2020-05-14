@@ -67,5 +67,10 @@ package:
 	@zip $(AWS_ZIPFILE) $(DATA_FILE)
 
 deploy:
+# deploys the package to aws lambda
 	@aws lambda update-function-code --function-name $(LAMBDA_FUNCTION) --zip-file fileb://$(AWS_ZIPFILE) >> $(AWS_DEPLOY_OUTPUT)
 
+test-aws:
+# tests the function is working by providing a suitable payload
+# this will not tweet the headline, just save it to the output json file
+	@aws lambda invoke --function-name  $(LAMBDA_FUNCTION) --payload '{ "test": "Bob" }' --cli-binary-format raw-in-base64-out response.json
