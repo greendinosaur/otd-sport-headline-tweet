@@ -16,6 +16,7 @@ In addition to the general pre-requisites for running the bot, in order to run t
     * `TWITTER_CONSUMER_SECRET`
     * `TWITTER_ACCESS_TOKEN`
     * `TWITTER_ACCESS_TOKEN_SECRET`
+    * These keys are to be encrypted using the Lambda encryption options
 
 ## Creating the function
 You can either create the function using the AWS Lambda dashboard or run a AWS CLI command to do this.
