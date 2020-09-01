@@ -1,9 +1,15 @@
 .pytest_cache
 .venv
 .vscode
+.aws-sam
+.idea
 *.numbers
 .scannerwork
 sonar-project.properties
+env.sh
+temp_package
+
+*.zip
 __pycache__
 config.py
 

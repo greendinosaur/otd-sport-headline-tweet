@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  app
+
+  Tweets a sports headline related to a football match played on this day in history involving Everton FC
+  
+Globals:
+  Function:
+    Timeout: 3
+
+Parameters:
+  CONSUMERKEY:
+    Type: String
+    Description: Consumer key for Twitter account
+    NoEcho: True
+  CONSUMERSECRET:
+    Type: String
+    Description: Consumer secret for Twitter account
+    NoEcho: True
+  ACCESSTOKEN:
+    Type: String
+    Description: Access token for Twitter account
+    NoEcho: True
+  ACCESSTOKENSECRET:
+    Type: String
+    Description: Access token secret for Twitter account
+    NoEcho: True
+  LAMBDAROLE:
+    Type: String
+    Description: Role ARN to use to execute the function
+    NoEcho: True
+  KMSKEY:
+    Type: String
+    Description: Key used to encrypt environment variables
+    NoEcho: True
+
+Resources:
+  GenerateOTDHeadlineFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      Description: Generates a headline based on a randomly selected soccer match that occurred on this day in history involving Everton FC
+      Role: !Ref LAMBDAROLE
+      KmsKeyArn: !Ref KMSKEY
+      Events:
+        RunOTDOnSchedule:
+          Type: Schedule
+          Properties:
+            Description: Runs the OTD function once a day
+            Schedule: cron(07 06 * * ? *)
+      Environment:
+        Variables:
+          TWITTER_CONSUMER_KEY: !Ref CONSUMERKEY
+          TWITTER_CONSUMER_SECRET: !Ref CONSUMERSECRET
+          TWITTER_ACCESS_TOKEN: !Ref ACCESSTOKEN
+          TWITTER_ACCESS_TOKEN_SECRET: !Ref ACCESSTOKENSECRET
+
+Outputs:
+  GenerateOTDHeadline:
+    Description: "GenerateOTDFunction Lambda Function ARN"
+    Value: !GetAtt GenerateOTDHeadlineFunction.Arn
