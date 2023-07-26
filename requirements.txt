@@ -4,7 +4,7 @@ bandit==1.6.2
 beautifulsoup4==4.9.0
 boto3==1.14.52
 botocore==1.17.52
-certifi==2020.4.5.1
+certifi==2023.7.22.1
 chardet==3.0.4
 coverage==4.4.2
 docutils==0.15.2
